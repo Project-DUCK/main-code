@@ -7,7 +7,7 @@ http.createServer(function(req, res) {
 
 const { Client, Collection } = require('discord.js');
 const client = new Client({
-	partials: ['GUILD_MEMBER', 'MESSAGE', 'CHANNEL', 'REACTION']
+    partials: ['GUILD_MEMBER', 'MESSAGE', 'CHANNEL', 'REACTION']
 });
 const chalk = require('chalk');
 const owners = require('./owner.json');
