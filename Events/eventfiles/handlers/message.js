@@ -1,5 +1,6 @@
 const chalk = require("chalk");
 const { Collection } = require("discord.js");
+const { MessageEmbed } = require('discord.js');
 const cooldowns = new Collection();
 const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
@@ -48,19 +49,15 @@ module.exports = async (message) => {
                 .setDescription(`\`${command.name}\`を使用するには、あと ${timeLeft.toFixed(1)} 秒待ってください`)
                 .setTimestamp()
             );
-            if(LOG_CHANNEL_ID){
-                client.channels.cache.get(LOG_CHANNEL_ID).send(
-                    new MessageEmbed()      
-                    .setColor("RED")
-                    .setTitle("COOLDOWN")
-                    .setDescription(`\`${command.name}\`コマンドの連投`)
-                    .addField("コマンド使用者:",`${message.author.tag}`)
-                    .addField("コマンド使用場所:",`${message.channel}`)
-                    .setTimestamp()).catch(console.error);
-                return;
-            }else{
-                return;
-            }
+            client.channels.cache.get(client.spamLog).send(
+                new MessageEmbed()      
+                .setColor("RED")
+                .setTitle("spamming log")
+                .setDescription(`\`${command.name}\`コマンドの連投`)
+                .addField("コマンド使用者:",`user name: ${message.author.tag}\nuid: ${message.author.id}`)
+                .addField("コマンド使用場所:",`${message.channel}(${message.channel.id})`)
+                .setTimestamp()).catch(console.error);
+            return;
         }
     }
 

@@ -14,6 +14,8 @@ const owners = require('./owner.json');
 client.owners = owners;
 client.commands = new Collection();
 client.logger = chalk;
+client.evalLog = "803971607504617493";
+client.spamLog = "803969724651405322";
 
 require('./eventLoader/loadEvents.js')(client);
 
