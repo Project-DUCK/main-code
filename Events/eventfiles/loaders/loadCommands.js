@@ -8,6 +8,7 @@ module.exports = (client) => {
         .forEach((filenameWithoutExtension) => {
             const command = require(`./../../../Commands/${filenameWithoutExtension}`)
             client.commands.set(command.name, command);
-            console.log(client.logger.yellow(`[COMMAND | AVAILABLE]:${client.logger.green(client.commands.map(c=>c.disabled ? null : c.name))}`))
-            console.log(client.logger.red(`[COMMAND | UNAVAILABLE]:${client.logger.green(client.commands.map(c=>c.disabled ? c.name : null ))}`))        });
+            //const UNAVAILABLE = client.commands.map(c=>c.disabled ? c.name : null )
+            //console.log(client.logger.yellow(`[COMMAND | AVAILABLE]:${client.logger.green(AVAILABLE)}`))
+            console.log(client.logger.red(`[COMMAND | AVAILABLE]:${client.logger.green(client.commands.keyArray())}`))        });
 };

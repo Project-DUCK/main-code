@@ -13,7 +13,7 @@ const chalk = require('chalk');
 const owners = require('./owner.json');
 client.owners = owners;
 client.commands = new Collection();
-client.logger = chalk;
+client.logger = chalk
 
 require('./eventLoader/loadEvents.js')(client);
 
