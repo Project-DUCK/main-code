@@ -13,6 +13,7 @@ module.exports = client => {
 		.forEach(filenameWithoutExtension => {
 			const command = require(`./../../../Commands/${filenameWithoutExtension}`);
 			client.commands.set(command.name, command);
+		});
 			let disabled = 0;
 			const UNAVAILABLE = client.commands.map(
 				c => (c.disabled ? c.name : disabled += 1 )
@@ -35,5 +36,5 @@ module.exports = client => {
 					)}`
 				)
 			);
-		});
+		
 };

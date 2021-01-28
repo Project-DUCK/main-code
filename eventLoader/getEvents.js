@@ -17,7 +17,6 @@ const getHandlers = handlerFilePath =>
 
 const groupByHandlerName = (handlerMap, { handlerName, handler }) => {
 	(handlerMap[handlerName] = handlerMap[handlerName] || []).push(handler);
-
 	return handlerMap;
 };
 
