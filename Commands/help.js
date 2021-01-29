@@ -17,6 +17,9 @@ module.exports = {
 		const COMMANDS = client.commands.array();
 		if (args[0]) {
 			const COMMAND = client.commands.find(c => c.name === args[0]);
+			if(!COMMAND){
+			  return message.reply("`"+args[0]+"`というコマンドはありません");
+			}
 			if (COMMAND.ownerOnly === true) {
 				return;
 			}

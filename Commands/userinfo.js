@@ -9,7 +9,7 @@ module.exports = {
     aliases: ["ui"],
     disabled: false,
     description: `指定したユーザーの情報を検索します。`,
-    example: `[<@member>]`,
+    example: `[<@user>]`,
     details: `コマンドの後に半角スペースを開けて\nユーザーのIDかユーザーをメンションしてください\n(IDを使うことでこのサーバーに居ないユーザーも取得できます)\n例: \`d>userinfo 1234546789101\` \`d>userinfo @member\``,
     userPerms: [],
     cooldown: 10,
@@ -37,9 +37,9 @@ module.exports = {
             const ROLES = await MEMBER.roles.cache.filter(r => r.id !== DEFAULTROLE.id).sort((a,b)=> b.position - a.position).map(r=>r.id)
             if(MEMBER){
             user_embed.addField("サーバー入室日時",moment(MEMBER.joinedAt).tz("Asia/Tokyo").format("YYYY/MM/DD h:mm A"),true)
-            .addField("最上位ロール",MEMBER.roles.highest.id === defaultRole.id ? 'なし' : `<@&${member.roles.highest.id}>`,true)
+            .addField("最上位ロール",MEMBER.roles.highest.id === DEFAULTROLE.id ? 'なし' : `<@&${MEMBER.roles.highest.id}>`,true)
             .addField("表示ロール",MEMBER.roles.hoist ? `<@&${MEMBER.roles.hoist.id}>` : "なし",true)
-            .addField(`全ロール(${ROLES.length}個)`,`${Util.trimValue(message.guild.member(USER)._roles.join('> <@&'))}`)
+            .addField(`全ロール(${ROLES.length}個)`,`<@&${Util.trimValue(message.guild.member(USER)._roles.join('> <@&'))}>`)
             }
     message.channel.send(user_embed)
     }

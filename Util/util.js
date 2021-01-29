@@ -10,7 +10,7 @@ class Util {
   }
 
   static trimValue(text, maxLen = 1150) {
-    return text.length > maxLen ? `${text.substr(0, maxLen)}...` : text;
+    return text.length > maxLen ? `${text.substr(0, maxLen)}` : text;
   }
 
   static trimArray(arr, maxLen = 10) {
