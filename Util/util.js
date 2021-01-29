@@ -1,6 +1,4 @@
 const crypto = require('crypto');
-const Entities = require('html-entities').AllHtmlEntities;
-const entities = new Entities();
 const { stripIndents } = require('common-tags');
 const inviteRegex = /(https?:\/\/)?(www\.|canary\.|ptb\.)?discord(\.gg|(app)?\.com\/invite|\.me)\/([^ ]+)\/?/gi;
 const botInvRegex = /(https?:\/\/)?(www\.|canary\.|ptb\.)?discord(app)?\.com\/(api\/)?oauth2\/authorize\?([^ ]+)\/?/gi; 
@@ -11,8 +9,8 @@ class Util {
     return text.length > maxLen ? `${text.substr(0, maxLen - 3)}...` : text;
   }
 
-  static trimValue(text, maxLen = 1000) {
-    return text.length > maxLen ? `${text.substr(0, maxLen - 3)}...` : text;
+  static trimValue(text, maxLen = 1150) {
+    return text.length > maxLen ? `${text.substr(0, maxLen)}...` : text;
   }
 
   static trimArray(arr, maxLen = 10) {
