@@ -41,6 +41,6 @@ module.exports = {
             .addField("表示ロール",MEMBER.roles.hoist ? `<@&${MEMBER.roles.hoist.id}>` : "なし",true)
             .addField(`全ロール(${ROLES.length}個)`,`<@&${Util.trimValue(message.guild.member(USER)._roles.join('> <@&'))}>`)
             }
-    message.channel.send(user_embed)
+    message.channel.send(user_embed);
     }
 };
