@@ -12,4 +12,4 @@ jobs:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         stale-issue-message: '長期間openのままなのでcloseします。'
         days-before-stale: 30
-        days-before-close: 5
+        days-before-close: 6
