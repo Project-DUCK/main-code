@@ -17,6 +17,7 @@ client.logger = chalk;
 client.evalLog = "803971607504617493";
 client.spamLog = "803969724651405322";
 client.commandLog = "803969058725822486";
+client.guildId = "803967839458689074";
 
 require('./eventLoader/loadEvents.js')(client);
 

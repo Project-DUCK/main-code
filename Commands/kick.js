@@ -5,16 +5,25 @@ module.exports = {
     name: "kick",
     aliases: [],
     disabled: false,
+    description: `半角スペースで区切ったメンバーをkickします。`,
+    example: `[...<@member>]`,
+    details: `メンバーを一括キックする際に使用できます。\n例:\`d>kick 12345678999 @Member\``,
+    userPerms: ["KICK_MEMBERS","ADMINISTRATOR"],
     cooldown: 10,
     ownerOnly: false,
 
     async execute(message, args, client) {
+      if(!message.member.hasPermission("KICK_MEMBERS",{checkAdmin:true})){
+        return message.reply("権限がありません")
+      }else if(!args[0]){
+        return message.reply("メンバーを一人以上指定してください")
+      }
         let KickMemberIdArray = [];
 
         // 最後にembedにメンバーの情報を入れる
         let kick_member = [];
 
-        // 1文字目を数字にして成功かどうか判断する
+        // 1文字SVGComponentTransferFunctionElementか判断する
         // 0: 成功 1: 失敗(ロール) 2: 失敗(原因不明))
 
         args.forEach((arg) => KickMemberIdArray.push(arg.replace("<@!", "").replace("<@", "").replace(">", "")));
@@ -55,5 +64,5 @@ module.exports = {
 
         message.channel.send(kick_embed);
         client.channels.cache.get(client.commandLog).send(cmd_log);
-    },
+    }
 };

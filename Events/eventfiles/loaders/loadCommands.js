@@ -14,25 +14,21 @@ module.exports = client => {
 			const command = require(`./../../../Commands/${filenameWithoutExtension}`);
 			client.commands.set(command.name, command);
 		});
-			let disabled = 0;
-			const UNAVAILABLE = client.commands.map(
-				c => (c.disabled ? c.name : disabled += 1 )
-			);
-			let nondisabled = 0;
-			const AVAILABLE = client.commands.map(
-			  c => (c.disabled ? nondisabled += 1 : c.name)
-			);
+    const COMMANDS = client.commands.array();
+    let AVAILABLE = []
+    let UNAVAILABLE = []
+		COMMANDS.forEach(c=> c.disabled ? UNAVAILABLE.push(c.name) : AVAILABLE.push(c.name))
 			console.log(
 				client.logger.yellow(
 					`[COMMAND | AVAILABLE]:${client.logger.green(
-						AVAILABLE.length === nondisabled ? 'N/A' : AVAILABLE
+						AVAILABLE.length === 0 ? 'N/A' : AVAILABLE
 					)}`
 				)
 			);
 			console.log(
 				client.logger.red(
 					`[COMMAND | UNAVAILABLE]:${client.logger.green(
-						UNAVAILABLE.length === disabled ? 'N/A' : UNAVAILABLE
+						UNAVAILABLE.length === 0 ? 'N/A' : UNAVAILABLE
 					)}`
 				)
 			);
