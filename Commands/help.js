@@ -10,7 +10,7 @@ module.exports = {
 	userPerms: [],
 	details:
 		'helpを表示します\n例: `d>help`(コマンド一覧を表示)\n`d>help [コマンド名]`(コマンドの詳細を表示)',
-	cooldown: 10,
+	cooldown: 1,
 	ownerOnly: false,
 
 	async execute(message, args, client) {
@@ -23,7 +23,7 @@ module.exports = {
 			if (COMMAND.ownerOnly === true) {
 				return;
 			}
-			const PERMS = [];
+		let PERMS = [];
 			if (COMMAND.userPerms.length > 0) {
 				COMMAND.userPerms.forEach(p =>
 					PERMS.push(message.member.hasPermission(p) ? `✅${p}` : `❎${p}`)
@@ -42,7 +42,7 @@ module.exports = {
 			message.channel.send(detail_embed);
 		} else {
 			let help_embed = new MessageEmbed()
-				.setTitle(`${client.user.name} | HELP`)
+				.setTitle(`${client.user.username} | HELP`)
 				.setAuthor(message.author.tag, message.author.displayAvatarURL())
 				.setDescription(
 					`\`${
@@ -59,7 +59,7 @@ module.exports = {
 									c.aliases == [] ? `(${c.aliases})` : ''
 								}**`,
 								`${c.description}\n(${
-									c.disabled == true ? '使用可能' : 'メンテナンス中'
+									c.disabled == true ?  'メンテナンス中' :'使用可能'
 								})`,
 								true
 						  )
