@@ -1,5 +1,5 @@
 const { MessageEmbed } = require('discord.js');
-const { inspect } = require('util');
+const { inspect } = require("util");
 const moment = require('moment');
 require('moment-timezone');
 const Util = require('./../Util/util');
