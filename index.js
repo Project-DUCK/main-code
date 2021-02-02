@@ -1,9 +1,10 @@
 // teraserverが使えるようになるまでの命
 const http = require('http');
-http.createServer(function(req, res) {
-		res.write('起動中です。');
-		res.end();
-	}).listen(8080);
+var server =  http.createServer(function(request, response) {
+		response.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
+    response.end('<h1>DUCK</h1>');
+	})
+  server.listen(8080);
 
 const { Client, Collection } = require('discord.js');
 const client = new Client({
