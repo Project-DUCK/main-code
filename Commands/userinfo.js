@@ -25,7 +25,6 @@ module.exports = {
 		} else {
 			USER_ID = message.author.id;
 		}
-		let USER_IN_SERVER = true;
 		let USER;
 		try {
 			USER = await client.users.fetch(USER_ID);
