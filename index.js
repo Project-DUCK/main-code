@@ -2,10 +2,16 @@
 const http = require('http');
 var server =  http.createServer(function(request, response) {
 		response.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
-    response.end('<h1>DUCK</h1>');
+    response.end(`
+    <head><title>${client.user.tag}</title></head>
+    <h1>${client.user.tag}</h1>
+    <h3>ギルド数:${client.guilds.cache.size}<br>
+    ユーザー数:${client.users.cache.size}<br>
+    絵文字数:${client.emojis.cache.size}</h3>
+    `);
 	})
   server.listen(3000);
-
+  
 const { Client, Collection } = require('discord.js');
 const client = new Client({
     partials: ['GUILD_MEMBER', 'MESSAGE', 'CHANNEL', 'REACTION'],
@@ -26,3 +32,4 @@ client.guildId = "803967839458689074";
 require('./eventLoader/loadEvents.js')(client);
 
 client.login(process.env.DISCORD_BOT_TOKEN);
+
