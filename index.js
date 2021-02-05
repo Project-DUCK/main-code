@@ -7,7 +7,8 @@ var server =  http.createServer(function(request, response) {
     <h1>${client.user.tag}</h1>
     <h3>ギルド数:${client.guilds.cache.size}<br>
     ユーザー数:${client.users.cache.size}<br>
-    絵文字数:${client.emojis.cache.size}</h3>
+    絵文字数:${client.emojis.cache.size}<br>
+    コマンド:${client.commands.keyArray()}</h3>
     `);
 	})
   server.listen(3000);
