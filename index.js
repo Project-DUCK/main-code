@@ -1,9 +1,13 @@
 // teraserverが使えるようになるまでの命
 const http = require('http');
+const fs   = require('fs');
+const path = require('path');
 var server =  http.createServer(function(request, response) {
 		response.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
     response.end(`
-    <head><title>${client.user.tag}</title></head>
+    <head>
+    <title>${client.user.tag}</title>
+    </head>
     <h1>${client.user.tag}</h1>
     <h3>ギルド数:${client.guilds.cache.size}<br>
     ユーザー数:${client.users.cache.size}<br>
