@@ -3,7 +3,9 @@ const http = require('http');
 const fs   = require('fs');
 const path = require('path');
 var server =  http.createServer(function(request, response) {
-		response.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
+  response.write('otintin')
+  response.end()
+		/*response.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
     response.end(`
     <head>
     <title>${client.user.tag}</title>
@@ -13,7 +15,7 @@ var server =  http.createServer(function(request, response) {
     ユーザー数:${client.users.cache.size}<br>
     絵文字数:${client.emojis.cache.size}<br>
     コマンド:${client.commands.keyArray()}</h3>
-    `);
+    `);*/
 	})
   server.listen(3000);
   
@@ -37,4 +39,3 @@ client.guildId = "803967839458689074";
 require('./eventLoader/loadEvents.js')(client);
 
 client.login(process.env.DISCORD_BOT_TOKEN);
-
