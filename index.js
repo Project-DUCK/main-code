@@ -1,5 +1,6 @@
 // teraserverが使えるようになるまでの命
 const http = require('http');
+const 
 const fs   = require('fs');
 const path = require('path');
 var server =  http.createServer(function(request, response) {

@@ -48,6 +48,8 @@ module.exports = {
 		let MEMBERS = [];
 		let ROLES = [];
 		let amount_error = 0;
+    let allow_perms_test = [];
+    let deny_perms_test = [];
 		
 		//すべてのギルドメンバーを取得
 		await message.guild.members.fetch();
@@ -109,6 +111,7 @@ module.exports = {
 		for(const s of switcharg){
 		  if(s.startsWith("a")||s.startsWith("allow")){
 		    const [switched_prefix, ...perms] = s.split(" ");
+        allow_perms_test = perms
 		    for(const c of CHANNELS){
 		      MEMBERS.forEach(m => c.overwritePermissions([{
 		      id:m,
@@ -118,14 +121,29 @@ module.exports = {
 		      id:r,
 		      allow:perms
 		    }],"permissionコマンドによる変更("+message.author.tag+")"))
+        const allow_perms = perms.map(p=> "✅"+p)
 		    allow_embed.addField(c.name,"権限設定が変更されました")
 		    MEMBERS.forEach(m=> 
-		    allow_embed.addField(`@${m.user.tag}`,perms.join("\n")));
-		    ROLES.forEach(r=>allow_embed.addField(`@${r.name}`,perms.join("\n")))
+		    allow_embed.addField(`@${m.user.tag}`,allow_perms.join("\n")));
+		    ROLES.forEach(r=>allow_embed.addField (`@${r.name}`,allow_perms.join("\n")))
 		    }
 		    message.channel.send(allow_embed);
 		  }else if(s.startsWith("d")||s.startsWith("deny")){
-		    
+		    const [switched_prefix, ...perms] = s.split(" ");
+        deny_perms_test = perms;
+        for(const c of CHANNELS){
+          MEMBERS.forEach(m => c.overwritePermissions([{
+            id:m,
+            deny:perms
+          }],"permissionコマンドによる変更("+message.author.tag+")"));
+          ROLES.forEach(r=>c.overwritePermissions([{
+            id:r,
+            allow:perms
+          }],"permissionコマンドによる変更("+message.author.tag+")"));
+        }
+        const deny_perms = perms.map(p=> "❎"+p)
+        MEMBERS.forEach(m=>deny_embed.addField(`@${m.user.tag}`,deny_perms.join("\n")))
+        ROLES.forEach(r=> deny_embed.addField((`@${r.name}`,deny_perms.join("\n"))))
 		  }else{
 		    continue;
 		  }
