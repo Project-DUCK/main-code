@@ -7,8 +7,7 @@ module.exports = {
 	description: 'ロールやメンバーの権限を一括で操作できます。',
 	example:
 		'-channel <#channel> -member <@!member> -role <@&role> -add [...permissions] -remove [...permissions]',
-	details:
-		`第一引数で権限を編集するチャンネルを指定します。
+	details: `第一引数で権限を編集するチャンネルを指定します。
 		\n(カテゴリーチャンネルを指定すると、そのカテゴリーにある全てのテキストチャンネルの権限が編集されます)
 		\n第二引数で権限を編集する対象を指定します。(メンバーかロール)
 		\n第三引数で権限を追加するか削除するかを指定します。(\`-add\`か\`-remove\`)
@@ -18,10 +17,10 @@ module.exports = {
 	disabled: false,
 	ownerOnly: false,
 	async execute(message, args, client) {
-	  let succses_embed = new MessageEmbed().setColor("GREEN");
-	  let error_embed = new MessageEmbed().setColor("RED");
-	  let allow_embed = new MessageEmbed().setColor("BLUE");
-	  let deny_embed = new MessageEmbed().setColor("ORANGE")
+		let succses_embed = new MessageEmbed().setColor('GREEN');
+		let error_embed = new MessageEmbed().setColor('RED');
+		let allow_embed = new MessageEmbed().setColor('BLUE');
+		let deny_embed = new MessageEmbed().setColor('ORANGE');
 		//botのメンバーobjを取得
 		const CLIENT_MEMBER = message.guild.members.cache.get(client.user.id);
 		//管理者権限の確認(bot本体)
@@ -48,109 +47,196 @@ module.exports = {
 		let MEMBERS = [];
 		let ROLES = [];
 		let amount_error = 0;
-    let allow_perms_test = [];
-    let deny_perms_test = [];
-		
+		let allow_perms_test = [];
+		let deny_perms_test = [];
+
 		//すべてのギルドメンバーを取得
 		await message.guild.members.fetch();
 		const [...switcharg] = message.content.split(' -');
-		for(const s of switcharg){
-		  if(s.startsWith("c") || s.startsWith("channel")){
-		    const [switched_prefix, ...channel] = s.split(" ");
-		    channel.forEach(c=>CHANNELS.push(message.guild.channels.cache.get(c.replace('<#', '').replace('>', ''))));
-		    for(let i = 0; i < CHANNELS.length ; i++){
-		      const c = CHANNELS[i];
-		      if(c === undefined){
-		        error_embed.addField("❎"+"("+channel[i]+")","(エラー)チャンネルではありません");
-		      }else{
-		        amount_error++;
-		        error_embed.addField("✅"+"("+channel[i]+")","チャンネルを取得できましたがエラーが発生したため実行されませんでした。[<#"+c.id+">]")
-		        succses_embed.addField("✅"+"("+channel[i]+")","チャンネルを取得しました[<#"+c.id+">]");
-		      }
-		    }
-		  }else if(s.startsWith("m")|| s.startsWith("member")){
-		    const [switched_prefix, ...member] = s.split(" ");
-		    member.forEach(m=>MEMBERS.push(message.guild.members.cache.get(m.replace('<@', '').replace('<@!', '').replace('>', ''))));
-		    for(let i = 0; i < MEMBERS.length ; i++){
-		      const m = MEMBERS[i];
-		      if(m === undefined){
-		        error_embed.addField("❎"+"("+member[i]+")","(エラー)メンバーではありません");
-		      }else{
-		        amount_error++;
-		        error_embed.addField("✅"+"("+member[i]+")","メンバーを取得できましたがエラーが発生したため実行されませんでした。[<@!"+m.id+">]")
-		        succses_embed.addField("✅"+"("+member[i]+")","メンバーを取得しました[<@!"+m.id+">]");
-		      }
-		    }
-		  }else if(s.startsWith("r")||s.startsWith("role")){
-		    const [switched_prefix, ...role] = s.split(" ");
-		    role.forEach(r=>ROLES.push(message.guild.roles.cache.get(r.replace('<@&','').replace('>',''))))
-		    for(let i = 0; i < ROLES.length ; i++){
-		      const r = ROLES[i];
-		      if(r === undefined){
-		        error_embed.addField("❎"+"("+role[i]+")","(エラー)ロールではありません");
-		      }else{
-		        amount_error++;
-		        error_embed.addField("✅"+"("+role[i]+")","ロールを取得できましたがエラーが発生したため実行されませんでした。[<@&"+r.id+">]")
-		        succses_embed.addField("✅"+"("+role[i]+")","ロールを取得しました[<@&"+r.id+">]");
-		      }
-		    }
-		  }else if(s.startsWith("a")||s.startsWith("allow")){
-		    continue;
-		  }else if(s.startsWith("d")||s.startsWith("deny")){
-		    continue;
-		  }else {
-		    continue;
-		  }
+		for (const s of switcharg) {
+			if (s.startsWith('c') || s.startsWith('channel')) {
+				const [switched_prefix, ...channel] = s.split(' ');
+				channel.forEach(c =>
+					CHANNELS.push(
+						message.guild.channels.cache.get(
+							c.replace('<#', '').replace('>', '')
+						)
+					)
+				);
+				for (let i = 0; i < CHANNELS.length; i++) {
+					const c = CHANNELS[i];
+					if (c === undefined) {
+						error_embed.addField(
+							'❎' + '(' + channel[i] + ')',
+							'(エラー)チャンネルではありません'
+						);
+					} else {
+						amount_error++;
+						error_embed.addField(
+							'✅' + '(' + channel[i] + ')',
+							'チャンネルを取得できましたがエラーが発生したため実行されませんでした。[<#' +
+								c.id +
+								'>]'
+						);
+						succses_embed.addField(
+							'✅' + '(' + channel[i] + ')',
+							'チャンネルを取得しました[<#' + c.id + '>]'
+						);
+					}
+				}
+			} else if (s.startsWith('m') || s.startsWith('member')) {
+				const [switched_prefix, ...member] = s.split(' ');
+				member.forEach(m =>
+					MEMBERS.push(
+						message.guild.members.cache.get(
+							m
+								.replace('<@', '')
+								.replace('<@!', '')
+								.replace('>', '')
+						)
+					)
+				);
+				for (let i = 0; i < MEMBERS.length; i++) {
+					const m = MEMBERS[i];
+					if (m === undefined) {
+						error_embed.addField(
+							'❎' + '(' + member[i] + ')',
+							'(エラー)メンバーではありません'
+						);
+					} else {
+						amount_error++;
+						error_embed.addField(
+							'✅' + '(' + member[i] + ')',
+							'メンバーを取得できましたがエラーが発生したため実行されませんでした。[<@!' +
+								m.id +
+								'>]'
+						);
+						succses_embed.addField(
+							'✅' + '(' + member[i] + ')',
+							'メンバーを取得しました[<@!' + m.id + '>]'
+						);
+					}
+				}
+			} else if (s.startsWith('r') || s.startsWith('role')) {
+				const [switched_prefix, ...role] = s.split(' ');
+				role.forEach(r =>
+					ROLES.push(
+						message.guild.roles.cache.get(r.replace('<@&', '').replace('>', ''))
+					)
+				);
+				for (let i = 0; i < ROLES.length; i++) {
+					const r = ROLES[i];
+					if (r === undefined) {
+						error_embed.addField(
+							'❎' + '(' + role[i] + ')',
+							'(エラー)ロールではありません'
+						);
+					} else {
+						amount_error++;
+						error_embed.addField(
+							'✅' + '(' + role[i] + ')',
+							'ロールを取得できましたがエラーが発生したため実行されませんでした。[<@&' +
+								r.id +
+								'>]'
+						);
+						succses_embed.addField(
+							'✅' + '(' + role[i] + ')',
+							'ロールを取得しました[<@&' + r.id + '>]'
+						);
+					}
+				}
+			} else if (s.startsWith('a') || s.startsWith('allow')) {
+				continue;
+			} else if (s.startsWith('d') || s.startsWith('deny')) {
+				continue;
+			} else {
+				continue;
+			}
 		}
-		if(error_embed.fields.length > amount_error){
-		return message.channel.send(error_embed)
-		}else{
-		  succses_embed.setTitle("取得が正常に行われました");
-		  message.channel.send(succses_embed)
+		if (error_embed.fields.length > amount_error) {
+			return message.channel.send(error_embed);
+		} else {
+			succses_embed.setTitle('取得が正常に行われました');
+			message.channel.send(succses_embed);
 		}
-		for(const s of switcharg){
-		  if(s.startsWith("a")||s.startsWith("allow")){
-		    const [switched_prefix, ...perms] = s.split(" ");
-        allow_perms_test = perms
-		    for(const c of CHANNELS){
-		      MEMBERS.forEach(m => c.overwritePermissions([{
-		      id:m,
-		      allow:perms
-		    }],"permissionコマンドによる変更("+message.author.tag+")"))
-		      ROLES.forEach(r =>c.overwritePermissions([{
-		      id:r,
-		      allow:perms
-		    }],"permissionコマンドによる変更("+message.author.tag+")"))
-        const allow_perms = perms.map(p=> "✅"+p)
-		    allow_embed.addField(c.name,"権限設定が変更されました")
-		    MEMBERS.forEach(m=> 
-		    allow_embed.addField(`@${m.user.tag}`,allow_perms.join("\n")));
-		    ROLES.forEach(r=>allow_embed.addField (`@${r.name}`,allow_perms.join("\n")))
-		    }
-		    message.channel.send(allow_embed);
-		  }else if(s.startsWith("d")||s.startsWith("deny")){
-		    const [switched_prefix, ...perms] = s.split(" ");
-        deny_perms_test = perms;
-        for(const c of CHANNELS){
-          MEMBERS.forEach(m => c.overwritePermissions([{
-            id:m,
-            deny:perms
-          }],"permissionコマンドによる変更("+message.author.tag+")"));
-          ROLES.forEach(r=>c.overwritePermissions([{
-            id:r,
-            allow:perms
-          }],"permissionコマンドによる変更("+message.author.tag+")"));
-        }
-        const deny_perms = perms.map(p=> "❎"+p)
-        MEMBERS.forEach(m=>deny_embed.addField(`@${m.user.tag}`,deny_perms.join("\n")))
-        ROLES.forEach(r=> deny_embed.addField((`@${r.name}`,deny_perms.join("\n"))))
-		  }else{
-		    continue;
-		  }
+		for (const s of switcharg) {
+			if (s.startsWith('a') || s.startsWith('allow')) {
+				const [switched_prefix, ...perms] = s.split(' ');
+				allow_perms_test = perms;
+				for (const c of CHANNELS) {
+					MEMBERS.forEach(m =>
+						c.overwritePermissions(
+							[
+								{
+									id: m,
+									allow: perms
+								}
+							],
+							'permissionコマンドによる変更(' + message.author.tag + ')'
+						)
+					);
+					ROLES.forEach(r =>
+						c.overwritePermissions(
+							[
+								{
+									id: r,
+									allow: perms
+								}
+							],
+							'permissionコマンドによる変更(' + message.author.tag + ')'
+						)
+					);
+					const allow_perms = perms.map(p => '✅' + p);
+					allow_embed.addField(c.name, '権限設定が変更されました');
+					MEMBERS.forEach(m =>
+						allow_embed.addField(`@${m.user.tag}`, allow_perms.join('\n'))
+					);
+					ROLES.forEach(r =>
+						allow_embed.addField(`@${r.name}`, allow_perms.join('\n'))
+					);
+				}
+				message.channel.send(allow_embed);
+			} else if (s.startsWith('d') || s.startsWith('deny')) {
+				const [switched_prefix, ...perms] = s.split(' ');
+				deny_perms_test = perms;
+				for (const c of CHANNELS) {
+					MEMBERS.forEach(m =>
+						c.overwritePermissions(
+							[
+								{
+									id: m,
+									deny: perms
+								}
+							],
+							'permissionコマンドによる変更(' + message.author.tag + ')'
+						)
+					);
+					ROLES.forEach(r =>
+						c.overwritePermissions(
+							[
+								{
+									id: r,
+									allow: perms
+								}
+							],
+							'permissionコマンドによる変更(' + message.author.tag + ')'
+						)
+					);
+				}
+				const deny_perms = perms.map(p => '❎' + p);
+				MEMBERS.forEach(m =>
+					deny_embed.addField(`@${m.user.tag}`, deny_perms.join('\n'))
+				);
+				ROLES.forEach(r =>
+					deny_embed.addField((`@${r.name}`, deny_perms.join('\n')))
+				);
+			} else {
+				continue;
+			}
 		}
-		
-//<==========================================>		
-	/*	
+
+		//<==========================================>
+		/*	
 		
 
 		//チャンネルの取得
@@ -283,4 +369,4 @@ module.exports = {
 			//<-------------------------仕切り-------------------------------->
 		}*/
 	}
-}
+};

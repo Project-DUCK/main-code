@@ -14,7 +14,7 @@ module.exports = async (message) => {
     const prefixRegex = new RegExp(`^(<@!?${message.client.user.id}>|${escapeRegex(process.env.BOT_PREFIX)})\\s*`);
     if(!prefixRegex.test(message.content)) return;
     const [, matchedPrefix] = message.content.match(prefixRegex);
-    const [commandPrefix,...args] = message.content.slice(matchedPrefix.length).split(' ');
+    const [commandPrefix,...args] = message.content.slice(matchedPrefix.length).split(/[\s]+/gm);
     const commandName = commandPrefix;
     message.client.prefix = matchedPrefix;
     

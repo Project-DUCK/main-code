@@ -16,6 +16,7 @@ module.exports = {
 	ownerOnly: false,
 
 	async execute(message, args, client) {
+	  console.log(args)
 		let role_embed = new MessageEmbed().setTimestamp();
 		let ROLE_ID = 0;
 		if (args[0]) {
