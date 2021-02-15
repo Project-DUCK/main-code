@@ -10,7 +10,7 @@ module.exports = {
 	disabled: false,
 	description: `ロールの情報を表示します。`,
 	example: ``,
-	details: `コマンドの後に半角スペースを開けて\nロールのIDかロールをメンションしてください\n例: \`d>roleinfo 1234546789101\` \`d>roleinfo @role\``,
+	details: `コマンドの後に半角スペースを開けて\nロールのIDかロールをメンションしてください\n例: \`{{p}}roleinfo 1234546789101\` \`{{p}}roleinfo @role\``,
 	userPerms: [],
 	cooldown: 10,
 	ownerOnly: false,

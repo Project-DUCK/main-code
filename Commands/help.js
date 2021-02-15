@@ -9,7 +9,7 @@ module.exports = {
 	example: '[command名]',
 	userPerms: [],
 	details:
-		'helpを表示します\n例: `d>help`(コマンド一覧を表示)\n`d>help [コマンド名]`(コマンドの詳細を表示)',
+		'helpを表示します\n例: `{{p}}help`(コマンド一覧を表示)\n`{{p}}help [コマンド名]`(コマンドの詳細を表示)',
 	cooldown: 1,
 	ownerOnly: false,
 
@@ -35,8 +35,8 @@ module.exports = {
 				.setTitle(`${COMMAND.name} | HELP`)
 				.setAuthor(message.author.tag, message.author.displayAvatarURL())
 				.addField(
-					`${client.prefix}${COMMAND.name} ${COMMAND.example}`,
-					`${COMMAND.details}`
+					`${message.guild.prefix}${COMMAND.name} ${COMMAND.example}`,
+					`${COMMAND.details.replace('{{p}}',message.guild.prefix)}`
 				)
 				.addField(`必要な権限`, PERMS);
 			message.channel.send(detail_embed);
@@ -46,7 +46,7 @@ module.exports = {
 				.setAuthor(message.author.tag, message.author.displayAvatarURL())
 				.setDescription(
 					`\`${
-						client.prefix
+						message.guild.prefix
 					}help [コマンド名]\`で、コマンドの詳しい使い方を表示できます`
 				);
 
@@ -55,7 +55,7 @@ module.exports = {
 					c.ownerOnly
 						? null
 						: help_embed.addField(
-								`**${client.prefix}${c.name} ${
+								`**${message.guild.prefix}${c.name} ${
 									c.aliases == [] ? `(${c.aliases})` : ''
 								}**`,
 								`${c.description}\n(${

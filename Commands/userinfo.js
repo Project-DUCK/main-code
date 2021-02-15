@@ -10,7 +10,7 @@ module.exports = {
 	disabled: false,
 	description: `指定したユーザーの情報を検索します。`,
 	example: `[<@user>]`,
-	details: `コマンドの後に半角スペースを開けて\nユーザーのIDかユーザーをメンションしてください\n(IDを使うことでこのサーバーに居ないユーザーも取得できます)\n例: \`d>userinfo 1234546789101\` \`d>userinfo @member\``,
+	details: `コマンドの後に半角スペースを開けて\nユーザーのIDかユーザーをメンションしてください\n(IDを使うことでこのサーバーに居ないユーザーも取得できます)\n例: \`{{p}}userinfo 1234546789101\` \`{{p}}userinfo @member\``,
 	userPerms: [],
 	cooldown: 3,
 	ownerOnly: false,
