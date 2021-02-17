@@ -36,7 +36,9 @@ module.exports = {
 				.setAuthor(message.author.tag, message.author.displayAvatarURL())
 				.addField(
 					`${message.guild.prefix}${COMMAND.name} ${COMMAND.example}`,
-					`${COMMAND.details.replace('{{p}}',message.guild.prefix)}`
+					`${COMMAND.details.replace('{{p}}',message.guild.prefix)
+					  .replace('{{p}}',message.guild.prefix).replace('{{p}}',message.guild.prefix).replace('{{p}}',message.guild.prefix).replace('{{p}}',message.guild.prefix).replace('{{p}}',message.guild.prefix)
+					}`
 				)
 				.addField(`必要な権限`, PERMS);
 			message.channel.send(detail_embed);

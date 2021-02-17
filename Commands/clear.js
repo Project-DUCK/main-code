@@ -10,6 +10,7 @@ module.exports = {
 	aliases: [],
 	disabled: false,
 	cooldown: 0,
+	userPerms:[],
 	ownerOnly: true,
 
 	async execute(message, args, client) {

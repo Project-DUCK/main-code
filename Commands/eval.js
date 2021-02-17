@@ -6,12 +6,13 @@ module.exports = {
 	aliases: [],
 	disabled: false,
 	cooldown: 10,
+	userPerms:[],
 	ownerOnly: true,
 
 	async execute(message, args, client) {
 		const command = client.commands.find(c => c.name === 'eval');
 		var code = message.content
-			.slice(client.prefix.length + command.length)
+			.slice(message.guild.prefix.length + command.length)
 			.split(' ');
 		try {
 			await eval(args.join(' '));
