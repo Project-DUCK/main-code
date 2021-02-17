@@ -7,7 +7,7 @@ module.exports = {
     disabled: false,
     description: `半角スペースで区切ったメンバーをkickします。`,
     example: `[...<@member>]`,
-    details: `メンバーを一括キックする際に使用できます。\n例:\`d>kick 12345678999 @Member\``,
+    details: `メンバーを一括キックする際に使用できます。\n例:\`{{p}}kick 12345678999 @Member\``,
     userPerms: ["KICK_MEMBERS","ADMINISTRATOR"],
     cooldown: 10,
     ownerOnly: false,
@@ -59,7 +59,7 @@ module.exports = {
             .setDescription("__**[実行結果]**__\n" + res_discription + "\n\n")
             .addField("[SERVER]", `${message.guild.name}(${message.guild.id})`)
             .addField("[CHANNEL]", `${message.channel.name}(<#${message.channel.id}>)(${message.channel.id})`)
-            .addField("[MODERATOR]", `${message.author.tag}(${message.author.id})`)
+            .addField("[MODERATOR]", `${message.author.tag}(<@!${message.author.id}>)`)
             .setTimestamp();
 
         message.channel.send(kick_embed);
