@@ -3,12 +3,47 @@ const { Collection } = require("discord.js");
 const { MessageEmbed } = require('discord.js');
 const cooldowns = new Collection();
 const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-
+const xpSetting = require('./../../../Models/xpSetting');
+const memberModel = require('./../../../Models/guildMember');
 
 
 module.exports = async (message) => {
     if(message.author.bot) return;
     if(!message.guild) return;
+    let IsNewGuild = await xpSetting.findOne({
+      guildId:guild.id
+    })
+    if(!IsNewGuild){
+      let NewSetting = new xpSetting({
+        guildId: guild.id,
+        isOn:false,
+      })
+     await NewSetting.save();
+    }
+    if(IsNewGuild.isOn){
+      var MessageMember = await memberModel.findOne({
+        guildId: message.guild.id,
+        memberId: message.author.id,
+      })
+      if(!MessageMember){
+        let NewMember = new memberModel({
+          guildId: message.guild.id,
+          memberId: message.author.id,
+          xp: 0,
+          level: 0,
+          items: [],
+        })
+        await NewMember.save();
+        MessageMember = NewMember;
+      }
+      MessageMember.xp += 1;
+      await MessageMember.save();
+      if(MessageMember.xp > MessageMember.level * MessageMember.level * MessageMember.level + 5){
+        MessageMember.level += 1;
+      }
+      await MessageMember.save();
+    }
+    
     const client = message.client;
     const ref = await message.client.db.ref(`prefix_${message.guild.id}`)
     const postDoc = await ref.get()
@@ -17,7 +52,7 @@ module.exports = async (message) => {
     prefix = postDoc.node_.children_.root_.value.value_;
     }catch(e){
       const pref = client.db.ref(`prefix_${message.guild.id}`);
-      pref.update({
+    pref.update({
       prefix:process.env.BOT_PREFIX
     })
     prefix = process.env.BOT_PREFIX;

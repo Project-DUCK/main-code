@@ -3,6 +3,8 @@ const moment = require('moment-timezone');
 const fs = require('fs');
 const mongoose = require('mongoose');
 const clientModel = require('./../../../Models/client');
+const memberModel = require('./../../../Models/guildMember');
+const xpSetting = require('./../../../Models/xpSetting');
 
 module.exports = async client => {
 	console.log(
@@ -16,7 +18,7 @@ module.exports = async client => {
 	);
 	require('../loaders/loadCommands')(client);
 	const CLIENT = await clientModel.findOne({
-    clientID : client.user.id
+    clientId : client.user.id
   })
   console.log(chalk.blue(`[MONGO DB | CONNECT] ${chalk.green(client.user.tag)}`))
 	const ref = client.db.ref('test1');
