@@ -28,6 +28,7 @@ client.owners = owners;
 
 
 require('./eventLoader/loadEvents.js')(client);
+require('./eventLoader/loadMongoDB.js')(client);
 require('./eventLoader/loadFIREBASE.js')(client);
 
 
