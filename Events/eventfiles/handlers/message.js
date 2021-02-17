@@ -10,6 +10,7 @@ const memberModel = require('./../../../Models/guildMember');
 module.exports = async (message) => {
     if(message.author.bot) return;
     if(!message.guild) return;
+    const guild = message.guild;
     let IsNewGuild = await xpSetting.findOne({
       guildId:guild.id
     })
@@ -19,7 +20,7 @@ module.exports = async (message) => {
         isOn:false,
       })
      await NewSetting.save();
-    }
+    }else{
     if(IsNewGuild.isOn){
       var MessageMember = await memberModel.findOne({
         guildId: message.guild.id,
@@ -42,6 +43,7 @@ module.exports = async (message) => {
         MessageMember.level += 1;
       }
       await MessageMember.save();
+    }
     }
     
     const client = message.client;
@@ -74,6 +76,12 @@ module.exports = async (message) => {
     
     if(command.ownerOnly){
         if(!message.client.owners.includes(message.author.id)) return;
+    }
+    
+    if(command.userPerms.length > 0){
+      if(!message.member.hasPermission(command.userPerms)){
+        return console.log(message.member.hasPermission(command.userPerms))
+      }
     }
     
     if(!cooldowns.has(command.name)){
