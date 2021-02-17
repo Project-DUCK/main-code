@@ -91,7 +91,7 @@ module.exports = {
 						message.guild.members.cache.get(
 							m
 								.replace('<@', '')
-								.replace('<@!', '')
+								.replace('!', '')
 								.replace('>', '')
 						)
 					)
