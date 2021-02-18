@@ -12,4 +12,5 @@ DUCKはdiscordのbotです。
 
 ## コマンド一覧
 
-- [help]()
+- [help](https://github.com/Project-DUCK/main-code/blob/main/docs/help.md)
+- [kick](https://github.com/Project-DUCK/main-code/blob/main/docs/kick.md)
