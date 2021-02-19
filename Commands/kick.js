@@ -13,11 +13,11 @@ module.exports = {
     ownerOnly: false,
 
     async execute(message, args, client) {
-      if(!message.member.hasPermission("KICK_MEMBERS",{checkAdmin:true})){
+    /*  if(!message.member.hasPermission("KICK_MEMBERS",{checkAdmin:true})){
         return message.reply("権限がありません")
       }else if(!args[0]){
         return message.reply("メンバーを一人以上指定してください")
-      }
+      }*/
         let KickMemberIdArray = [];
 
         // 最後にembedにメンバーの情報を入れる

@@ -1,6 +1,5 @@
 const chalk = require("chalk");
-const { Collection } = require("discord.js");
-const { MessageEmbed } = require('discord.js');
+const { Collection, MessageEmbed } = require("discord.js");
 const cooldowns = new Collection();
 const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const xpSetting = require('./../../../Models/xpSetting');
