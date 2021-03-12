@@ -35,6 +35,6 @@ module.exports = {
 	  .setFooter('bot stats')
 	  .setTimestamp();
 	  
-	message.channel.send(stats_embed)  
+	message.lineReply(stats_embed)  
 	}
 };

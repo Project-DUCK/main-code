@@ -7,7 +7,7 @@ module.exports = {
 	aliases: [],
 	disabled: false,
 	description: 'このサーバーのxp設定を行います',
-	example: '[on|off]',
+	example: '[...many options(詳しくは\`{{p}}help expで確認してください\`)]',
 	userPerms: ['ADMINISTRATOR'],
 	details:
 		'xpシステムを使用するかを設定します。\nオン:\`{{p}}exp on\`\nオフ:\`{{p}}exp off\`',
@@ -15,6 +15,7 @@ module.exports = {
 	ownerOnly: false,
 
 	async execute(message, args, client) {
+	  if(args[0].toLowerCase() == "set"){
 	  const GUILD = message.guild;
 	  let isOn;
 	  var THIS_GUILD_SETTING = await xpSetting.findOne({
@@ -23,7 +24,7 @@ module.exports = {
 	  if(!THIS_GUILD_SETTING){
 	    THIS_GUILD_SETTING = new xpSetting({
 	      guildId: GUILD.id,
-	      isOn:false
+	      isOn:false,
 	    })
 	  await THIS_GUILD_SETTING.save();
 	  }else{
@@ -48,7 +49,16 @@ module.exports = {
 	  }else{
 	    return message.reply(("引数が間違っています\n\`{{p}}help expで確認できます\`").replace('{{p}}',message.guild.prefix))
 	  }
-	  
-	  
+	  }else if(args[0].toLowerCase() == 'add'){
+	    const MEMBER = message.guild.members.cache.get(args[1].replace('<@!','').replace('<@','').replace('>',''));
+	    let MEMBER_SETTING = guildMember.findOne({
+	      guildId : message.guild.id,
+	      memberId : MEMBER.id,
+	    })
+	    if(!MEMBER_SETTING){
+	      return;
+	    }
+	  }
+
 	}
 };

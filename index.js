@@ -14,6 +14,7 @@ app.use('/web/public', express.static('web/public'));
 app.set('views', './web/views');
 app.set('view engine', 'jsx');
 app.engine('jsx', reactViews.createEngine());
+require('discord-reply');
 
 const { Client, Collection } = require('discord.js');
 const client = new Client({
@@ -25,12 +26,9 @@ const chalk = require('chalk');
 const owners = require('./owner.json');
 client.owners = owners;
 
-
-
 require('./eventLoader/loadEvents.js')(client);
 require('./eventLoader/loadMongoDB.js')(client);
 require('./eventLoader/loadFIREBASE.js')(client);
-
 
 
 app.get('/', (req, res) => {

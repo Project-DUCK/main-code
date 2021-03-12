@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const clientModel = require('./../../../Models/client');
 const memberModel = require('./../../../Models/guildMember');
 const xpSetting = require('./../../../Models/xpSetting');
+const { DiscordInteractions } = require("slash-commands");
+const genshin = require('genshin');
+const genshindb = require('genshin-db');
 
 module.exports = async client => {
 	console.log(
@@ -16,6 +19,10 @@ module.exports = async client => {
 			)}`
 		)
 	);
+
+
+  console.log(genshindb.weapons('天空の刃',{ querylanguages: ["Japanese","English"], 
+    resultlanguage: "English"}))
 	require('../loaders/loadCommands')(client);
 	const CLIENT = await clientModel.findOne({
     clientId : client.user.id
