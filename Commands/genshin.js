@@ -61,8 +61,8 @@ module.exports = {
           querylanguages: ["Japanese","English"], 
           resultlanguage: "English"
         })
-        let w = await genshindb.weapons(args.join(" "));
-        //weapon_embed.setImages(w.images.image)
+        let w = await genshindb.artifacts(args.join(" "));
+        weapon_embed.setImages(w.images.image)
         console.log(w)
 
 

@@ -1,5 +1,6 @@
 // teraserverが使えるようになるまでの命
 const http = require('http');
+require('dotenv').config();
 const express = require('express');
 const reactViews = require('express-react-views');
 const fs = require('fs');
@@ -9,7 +10,6 @@ const admin = require('firebase-admin');
 require('firebase/auth');
 require('firebase/firestore');
 const app = express();
-
 app.use('/web/public', express.static('web/public'));
 app.set('views', './web/views');
 app.set('view engine', 'jsx');
@@ -28,13 +28,13 @@ client.owners = owners;
 
 require('./eventLoader/loadEvents.js')(client);
 require('./eventLoader/loadMongoDB.js')(client);
-require('./eventLoader/loadFIREBASE.js')(client);
+//require('./eventLoader/loadFIREBASE.js')(client);
 
 
 app.get('/', (req, res) => {
 	res.render('index', client);
 });
-app.listen(() => console.log(`o`));
+app.listen(() => console.log(chalk.cyan(`[EXPRESS | LISTENING]${chalk.green(` port:3000`)}`)));
 client.on('disconnect', () => {
 	console.log('disconnect');
 });
