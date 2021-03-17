@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+const prefixSetting = require("./../Models/prefixSetting");
 
 module.exports = {
 	name: 'd-prefix',
@@ -8,7 +9,7 @@ module.exports = {
 	example: '[prefix]',
 	userPerms: ['ADMINISTRATOR'],
 	details:
-		'このサーバーで使うbotのprefixを設定します。\n 使用例:\`{{p}}d-prefix #\`(prefixが\`#\`に変更されます。)',
+		'このサーバーで使う、botのprefixを設定します。\n 使用例:\`{{p}}d-prefix #\`(prefixが\`#\`に変更されます。)',
 	cooldown: 10,
 	ownerOnly: false,
 
@@ -28,10 +29,12 @@ module.exports = {
 	    return message.channel.send('同じprefixは設定できません')
 	  }
 	  
-	  const ref = client.db.ref(`prefix_${GUILD.id}`);
-    ref.update({
-      prefix:NEW_PREFIX
+	  const PSetting = await prefixSetting.findOne({
+      guildId: GUILD.id
     })
+    
+    PSetting.prefix = NEW_PREFIX;
+    await PSetting.save();
     
     let cmd_log = new MessageEmbed()
     .setTitle('CHANGE GUILD PREFIX')

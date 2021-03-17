@@ -4,12 +4,16 @@ const cooldowns = new Collection();
 const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const xpSetting = require('./../../../Models/xpSetting');
 const memberModel = require('./../../../Models/guildMember');
+const prefixSetting = require("./../../../Models/prefixSetting");
 
 
 module.exports = async (message) => {
     if(message.author.bot) return;
     if(!message.guild) return;
+
     const guild = message.guild;
+    const client = message.client;
+
     let IsNewGuild = await xpSetting.findOne({
       guildId:guild.id
     })
@@ -45,19 +49,20 @@ module.exports = async (message) => {
     }
     }
     
-    const client = message.client;
-    const ref = await message.client.db.ref(`prefix_${message.guild.id}`)
-    const postDoc = await ref.get()
+    
     let prefix;
-    try{
-    prefix = postDoc.node_.children_.root_.value.value_;
-    }catch(e){
-      const pref = client.db.ref(`prefix_${message.guild.id}`);
-    pref.update({
-      prefix:process.env.BOT_PREFIX
-    })
-    prefix = process.env.BOT_PREFIX;
+    let PSetting = await prefixSetting.findOne({
+      guildId : guild.id
+    });
+    if(!PSetting){
+      PSetting = new prefixSetting({
+        guildId : guild.id
+      })
+      prefix = process.env.BOT_PREFIX
+    }else{
+      prefix = PSetting.prefix;
     }
+    await PSetting.save();
     const prefixRegex = new RegExp(`^(<@!?${message.client.user.id}>|${escapeRegex(prefix)})\\s*`);
     if(!prefixRegex.test(message.content)) return;
     const [, matchedPrefix] = message.content.match(prefixRegex);
@@ -110,6 +115,8 @@ module.exports = async (message) => {
                 .addField("コマンド使用者:",`user name: ${message.author.tag}\nuid: ${message.author.id}`)
                 .addField("コマンド使用場所:",`${message.channel}(${message.channel.id})`)
                 .setTimestamp()).catch(console.error);
+                
+            console.log(chalk.bgRed.bold(`SPAM: ${chalk.white(`${message.author.tag}がスパムしました`)}`))
             return;
         }
     }
@@ -120,7 +127,7 @@ module.exports = async (message) => {
     try{
         command.execute(message, args, client);
     }catch(error){
-        console.error(error);
+        console.log(chalk.bgRed.bold(`ERROR: ${chalk.white(error)}`))
         message.reply(
             new MessageEmbed()      
             .setColor("RED")

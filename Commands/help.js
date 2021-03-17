@@ -1,5 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const { inspect } = require('util');
+const { ReactionContoroller } = require('discord.js-reaction-controller')
 
 module.exports = {
 	name: 'help',
@@ -14,6 +15,7 @@ module.exports = {
 	ownerOnly: false,
 
 	async execute(message, args, client) {
+	 
 		const COMMANDS = client.commands.array();
 		if (args[0]) {
 			const COMMAND = client.commands.find(c => c.name === args[0]);
@@ -35,14 +37,14 @@ module.exports = {
 				.setTitle(`${COMMAND.name} | HELP`)
 				.setAuthor(message.author.tag, message.author.displayAvatarURL())
 				.addField(
-					`${message.guild.prefix}${COMMAND.name} ${COMMAND.example}`,
-					`${COMMAND.details.replace('{{p}}',message.guild.prefix)
-					  .replace('{{p}}',message.guild.prefix).replace('{{p}}',message.guild.prefix).replace('{{p}}',message.guild.prefix).replace('{{p}}',message.guild.prefix).replace('{{p}}',message.guild.prefix)
+					`${message.guild.prefix}${COMMAND.name} ${COMMAND.example.replace(/{{p}}/gm,message.guild.prefix)}`,
+					`${COMMAND.details.replace(/{{p}}/gm,message.guild.prefix)
 					}`
 				)
 				.addField(`必要な権限`, PERMS);
 			message.channel.send(detail_embed);
 		} else {
+		  if(COMMANDS.length < 25){
 			let help_embed = new MessageEmbed()
 				.setTitle(`${client.user.username} | HELP`)
 				.setAuthor(message.author.tag, message.author.displayAvatarURL())
@@ -70,6 +72,10 @@ module.exports = {
 			help_embed.setTimestamp();
 
 			message.channel.send(help_embed);
+		  }else{
+		    let long_embed = new ReactionController(client);
+		    
+		  }
 		}
 	}
 };
