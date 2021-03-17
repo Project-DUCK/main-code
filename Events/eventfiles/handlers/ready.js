@@ -19,13 +19,6 @@ module.exports = async client => {
 			)}`
 		)
 	);
-
-  await genshindb.setOptions({
-    verbose: false, 
-    nameonly: false,
-    querylanguages: ["Japanese","English"], 
-    resultlanguage: "English"
-    })
 	require('../loaders/loadCommands')(client);
 	const CLIENT = await clientModel.findOne({
     clientId : client.user.id

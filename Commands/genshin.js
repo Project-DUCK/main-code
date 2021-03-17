@@ -37,7 +37,7 @@ module.exports = {
     querylanguages: ["Japanese","English"], 
     resultlanguage: "Japanese"
     })
-    let chara = await genshindb.characters(args.join(" "))
+    let chara = await genshindb.characters(c.name)
     chara_embed.setTitle(`${chara.name} | ${chara.title}`)
     .setDescription(chara.description)
     .addField("レアリティ",chara.rarity,true)
@@ -54,15 +54,15 @@ module.exports = {
     }catch(e){
       //武器
       //try{
-        let weapon_embed = new MessageEmbed()
-        await genshindb.setOptions({
-          verbose: true, 
-          nameonly: true,
-          querylanguages: ["Japanese","English"], 
+        genshindb.setOptions({
+          verbose: false, 
+          nameonly: false,
+          querylanguages: ["English","Japanese"], 
           resultlanguage: "English"
         })
-        let w = await genshindb.artifacts(args.join(" "));
-        weapon_embed.setImages(w.images.image)
+        let weapon_embed = new MessageEmbed()
+        let w = await genshindb.weapons(args[0])
+        weapon_embed.setImage(w.images.image)
         console.log(w)
 
 

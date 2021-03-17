@@ -115,6 +115,8 @@ module.exports = async (message) => {
                 .addField("コマンド使用者:",`user name: ${message.author.tag}\nuid: ${message.author.id}`)
                 .addField("コマンド使用場所:",`${message.channel}(${message.channel.id})`)
                 .setTimestamp()).catch(console.error);
+                
+            console.log(chalk.bgRed.bold(`SPAM: ${chalk.white(`${message.author.tag}がスパムしました`)}`))
             return;
         }
     }
@@ -125,7 +127,7 @@ module.exports = async (message) => {
     try{
         command.execute(message, args, client);
     }catch(error){
-        console.error(error);
+        console.log(chalk.bgRed.bold(`ERROR: ${chalk.white(error)}`))
         message.reply(
             new MessageEmbed()      
             .setColor("RED")
