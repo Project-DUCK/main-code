@@ -19,7 +19,6 @@ require('discord-reply');
 const { Client, Collection } = require('discord.js');
 const client = new Client({
 	partials: ['GUILD_MEMBER', 'MESSAGE', 'CHANNEL', 'REACTION'],
-	fetchAllMembers: true,
 	disableMentions: 'everyone'
 });
 const chalk = require('chalk');

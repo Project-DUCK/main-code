@@ -17,6 +17,7 @@
     "common-tags": "^1.8.0",
     "discord-bot-dashboard": "^0.2.0",
     "discord-fetch-all": "^3.0.2",
+    "discord-player": "^3.4.0",
     "discord-reply": "0.0.9-a",
     "discord.js": "^12.5.1",
     "discord.js-reaction-controller": "^2.0.0",
