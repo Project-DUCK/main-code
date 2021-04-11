@@ -25,4 +25,5 @@ module.exports = async client => {
   })
   console.log(chalk.blue(`[MONGO DB | CONNECT] ${chalk.green(client.user.tag)}`))
 	const ADMIN_GUILD = await client.guilds.cache.get(client.guildId)
+  console.log(client.guilds.cache.keyArray())
 };
