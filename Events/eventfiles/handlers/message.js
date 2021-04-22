@@ -127,7 +127,7 @@ module.exports = async (message) => {
     try{
         command.execute(message, args, client);
     }catch(error){
-        console.log(chalk.bgRed.bold(`ERROR: ${chalk.white(error)}`))
+        console.log(chalk.bgRed.bold(`ERROR: ${chalk.yellow(error)}`))
         message.reply(
             new MessageEmbed()      
             .setColor("RED")
