@@ -1,5 +1,3 @@
-
-
 module.exports = (client) =>{
   //API root
   client.app.get('/api', (req,res)=>{
@@ -26,5 +24,15 @@ module.exports = (client) =>{
     res.json({ commands:command_array})
   })
   
+  //
+  client.app.get('/api/channels', (req,res)=>{
+    const CHANNEL = client.channels.cache.get(req.query.id)
+    res.json({channel:CHANNEL})
+  })
+  
+  client.app.get('/api/guilds', (req,res)=>{
+    const GUILD = client.guilds.cache.get(req.query.id)
+    res.json({guild:GUILD})
+  })
   
 }
